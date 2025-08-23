@@ -1,0 +1,29 @@
+{
+	"name": "simple-mern-products-app",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon server/server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/HoTa90/Simple-MERN-Products-App.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "module",
+	"bugs": {
+		"url": "https://github.com/HoTa90/Simple-MERN-Products-App/issues"
+	},
+	"homepage": "https://github.com/HoTa90/Simple-MERN-Products-App#readme",
+	"dependencies": {
+		"dotenv": "^17.2.1",
+		"express": "^4.19.2",
+		"mongoose": "^8.18.0"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.10"
+	}
+}

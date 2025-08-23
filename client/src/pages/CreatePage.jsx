@@ -33,10 +33,13 @@ export default function CreatePage() {
 				</Heading>
 				<Box
 					w={"full"}
-					bg={useColorModeValue("white", "gray.900")}
+					bg={useColorModeValue("white", "gray.800")}
 					p={6}
 					rounded={"lg"}
-					shadow={"md"}>
+					boxShadow={useColorModeValue(
+						"0 0 1em 0 rgb(0, 0 ,0, 0.5)",
+						"0 0 1em 0 rgb(255, 255 ,255, 0.5)"
+					)}>
 					<VStack spacing={4}>
 						<Input
 							placeholder="Product Name"

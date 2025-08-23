@@ -55,7 +55,13 @@ export default {
 
 	deleteProduct: async (req, res) => {
 		const { id } = req.params;
-		console.log(id);
+		
+        	if (!mongoose.Types.ObjectId.isValid(id)) {
+			return res
+				.status(404)
+				.json({ success: false, message: "Producst id not found" });
+		}
+
 
 		try {
 			await Product.findByIdAndDelete(id);
@@ -66,9 +72,9 @@ export default {
 				"Error:",
 				err.message
 			);
-			res.status(404).json({
+			res.status(500).json({
 				success: false,
-				message: "Product not found",
+				message: "Server ERROR",
 			});
 		}
 	},

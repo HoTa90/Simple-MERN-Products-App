@@ -6,6 +6,7 @@ import {
 	Text,
 	useColorMode,
 } from "@chakra-ui/react";
+
 import { FaPlusSquare } from "react-icons/fa";
 import { IoMoonSharp, IoSunnySharp } from "react-icons/io5";
 

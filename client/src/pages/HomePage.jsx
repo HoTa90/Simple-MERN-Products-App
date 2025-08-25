@@ -10,15 +10,13 @@ export default function HomePage() {
 		getAllProducts();
 	}, [getAllProducts]);
 
-	console.log(products);
-
 	return (
 		<Container maxW="container.xl" py={12}>
 			<VStack spacing={8}>
 				<Text
 					fontSize={"30"}
 					fontWeight={"bold"}
-					bgGradient="linear(to-r, #09c7edff, #046bd9ff)"
+					bgGradient="linear(to-r, #6371c1ff, #4051c2ff)"
 					bgClip={"text"}
 					textAlign={"center"}>
 					Current Products

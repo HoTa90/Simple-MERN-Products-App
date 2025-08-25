@@ -31,8 +31,8 @@ import { useProducts } from "../hooks/products.js";
 import { useRef, useState } from "react";
 
 export default function ProductCard({ product }) {
-	const textColor = useColorModeValue("gray.600", "gray.400");
-	const backgroundColor = useColorModeValue("white", "gray.800");
+	const textColor = useColorModeValue("gray.600", "gray.300");
+	const backgroundColor = useColorModeValue( "#B2B0E8", "#7A85C1");
 	const { deleteProduct, updateProduct } = useProducts();
 	const [updatedProduct, setUpdatedProduct] = useState(product);
 

@@ -89,7 +89,7 @@ export default function CreatePage() {
 							onChange={handleChange}
 						/>
 						<Button
-							colorScheme="blue"
+							colorScheme="purple"
 							onClick={handleAddProduct}
 							w={"full"}
 							fontSize={24}>

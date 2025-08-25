@@ -7,7 +7,7 @@ import {
 	useColorMode,
 } from "@chakra-ui/react";
 
-import { FaPlusSquare } from "react-icons/fa";
+import { FaPlusSquare, FaHome } from "react-icons/fa";
 import { IoMoonSharp, IoSunnySharp } from "react-icons/io5";
 
 import { Link } from "react-router";
@@ -25,14 +25,23 @@ export default function NavBar() {
 					base: "column",
 					sm: "row",
 				}}>
-				<Text
-					bgGradient="linear(to-r, #09c7edff, #046bd9ff)"
-					bgClip="text"
-					fontSize={{ base: "22", sm: "28" }}
-					fontWeight="bold"
-					textAlign={"cent"}>
-					<Link to={"/"}>Product Store</Link>
-				</Text>
+				
+					<Link to={"/"}>
+					<HStack spacing={2}>
+						<Text
+							bgGradient="linear(to-r, #6371c1ff, #4051c2ff)"
+							bgClip="text"
+							fontSize={{ base: 22, sm: 28 }}
+							fontWeight="bold"
+							textAlign="center">
+							Product Store
+						</Text>
+						<FaHome fontSize={35} color="#4051c2ff" />
+							</HStack>
+					</Link>
+					
+			
+
 				<HStack spacing={2} alignItems={"center"}>
 					<Link to={"/create"}>
 						<Button>

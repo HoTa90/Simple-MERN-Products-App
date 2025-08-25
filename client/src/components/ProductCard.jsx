@@ -15,6 +15,15 @@ import {
 	AlertDialogContent,
 	AlertDialogOverlay,
 	Button,
+	Modal,
+	ModalOverlay,
+	ModalContent,
+	ModalHeader,
+	ModalCloseButton,
+	ModalBody,
+	VStack,
+	Input,
+	ModalFooter,
 } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -24,11 +33,47 @@ import { useRef, useState } from "react";
 export default function ProductCard({ product }) {
 	const textColor = useColorModeValue("gray.600", "gray.400");
 	const backgroundColor = useColorModeValue("white", "gray.800");
-	const { deleteProduct } = useProducts();
+	const { deleteProduct, updateProduct } = useProducts();
+	const [updatedProduct, setUpdatedProduct] = useState(product);
+
 	const toast = useToast();
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const {
+		isOpen: isDeleteOpen,
+		onOpen: onDeleteOpen,
+		onClose: onDeleteClose,
+	} = useDisclosure();
+
+	const {
+		isOpen: isEditOpen,
+		onOpen: onEditOpen,
+		onClose: onEditClose,
+	} = useDisclosure();
 	const cancelRef = useRef();
 	const [isDeleting, setIsDeleting] = useState(false);
+
+	const handleUpdateProduct = async (id, updatedProduct) => {
+		const { success, message } = await updateProduct(id, updatedProduct);
+		console.log(success)
+		if (!success) {
+			toast({
+				title: "Error",
+				description: message,
+				status: "error",
+				duration: 3000,
+				isClosable: true,
+			});
+		} else {
+			toast({
+				title: "Success",
+				description: message,
+				status: "success",
+				duration: 3000,
+				isClosable: true,
+			});
+		}
+
+		onEditClose();
+	};
 
 	const handleDelete = async (id) => {
 		const { success, message } = await deleteProduct(id);
@@ -52,11 +97,16 @@ export default function ProductCard({ product }) {
 		return success;
 	};
 
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setUpdatedProduct((prev) => ({ ...prev, [name]: value }));
+	};
+
 	const onConfirmDelete = async (id) => {
 		try {
 			setIsDeleting(true);
 			const ok = await handleDelete(id);
-			if (ok) onClose();
+			if (ok) onDeleteClose();
 		} finally {
 			setIsDeleting(false);
 		}
@@ -95,20 +145,21 @@ export default function ProductCard({ product }) {
 						fontSize={25}
 						icon={<FaEdit />}
 						colorScheme="blue"
+						onClick={onEditOpen}
 					/>
 					<IconButton
 						aria-label="Delete product"
 						fontSize={25}
 						icon={<MdDelete />}
 						colorScheme="red"
-						onClick={onOpen}
+						onClick={onDeleteOpen}
 					/>
 				</HStack>
 
 				<AlertDialog
-					isOpen={isOpen}
+					isOpen={isDeleteOpen}
 					leastDestructiveRef={cancelRef}
-					onClose={isDeleting ? undefined : onClose}
+					onClose={isDeleting ? undefined : onDeleteClose}
 					isCentered>
 					<AlertDialogOverlay>
 						<AlertDialogContent>
@@ -117,14 +168,14 @@ export default function ProductCard({ product }) {
 							</AlertDialogHeader>
 
 							<AlertDialogBody>
-								Are you sure you want to delete {product.name}? You can't undo this action
-								afterwards.
+								Are you sure you want to delete {product.name}?
+								You can't undo this action afterwards.
 							</AlertDialogBody>
 
 							<AlertDialogFooter>
 								<Button
 									ref={cancelRef}
-									onClick={onClose}
+									onClick={onDeleteClose}
 									isDisabled={isDeleting}>
 									Cancel
 								</Button>
@@ -141,6 +192,50 @@ export default function ProductCard({ product }) {
 					</AlertDialogOverlay>
 				</AlertDialog>
 			</Box>
+
+			<Modal isOpen={isEditOpen} onClose={onEditClose}>
+				<ModalOverlay />
+				<ModalContent>
+					<ModalHeader>Update Product</ModalHeader>
+					<ModalCloseButton />
+					<ModalBody>
+						<VStack spacing={6}>
+							<Input
+								placeholder="Product Name"
+								name="name"
+								value={updatedProduct.name}
+								onChange={handleChange}
+							/>
+							<Input
+								placeholder="Price"
+								name="price"
+								type="number"
+								value={updatedProduct.price}
+								onChange={handleChange}
+							/>
+							<Input
+								placeholder="Image URL"
+								name="image"
+								value={updatedProduct.image}
+								onChange={handleChange}
+							/>
+						</VStack>
+					</ModalBody>
+					<ModalFooter>
+						<Button
+							colorScheme="blue"
+							mr={3}
+							onClick={() =>
+								handleUpdateProduct(product._id, updatedProduct)
+							}>
+							Update
+						</Button>
+						<Button variant={"ghost"} onClick={onEditClose}>
+							Close
+						</Button>
+					</ModalFooter>
+				</ModalContent>
+			</Modal>
 		</Box>
 	);
 }

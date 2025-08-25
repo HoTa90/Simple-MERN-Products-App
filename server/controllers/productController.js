@@ -46,7 +46,11 @@ export default {
 				{ name, price, image },
 				{ new: true }
 			);
-			res.status(200).json({ sucess: true, data: updatedProduct });
+			res.status(200).json({
+				success: true,
+				data: updatedProduct,
+				message: "Product Updated",
+			});
 		} catch (err) {
 			console.log("Error:", err.message);
 			res.status(500).json({ sucess: false, message: "Server Error" });
@@ -55,13 +59,12 @@ export default {
 
 	deleteProduct: async (req, res) => {
 		const { id } = req.params;
-		
-        	if (!mongoose.Types.ObjectId.isValid(id)) {
+
+		if (!mongoose.Types.ObjectId.isValid(id)) {
 			return res
 				.status(404)
 				.json({ success: false, message: "Producst id not found" });
 		}
-
 
 		try {
 			await Product.findByIdAndDelete(id);

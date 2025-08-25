@@ -38,8 +38,26 @@ export const useProducts = create((set) => ({
 		}
 
 		set((state) => ({
-			products: state.products.filter((p) => p._id !== id)
+			products: state.products.filter((p) => p._id !== id),
 		}));
 		return { success: true, message: data.message };
+	},
+	updateProduct: async (id, updatedProduct) => {
+		const response = await fetch(`api/products/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(updatedProduct),
+		});
+		const data = await response.json();
+		if (!data.success) {
+			return { success: false, message: data.message };
+		}
+
+		set((state) => ({
+			products: state.products.map((p) => (p._id === id ? data.data : p)),
+		}));
+		return { success: true, message: "Product updated!" };
 	},
 }));

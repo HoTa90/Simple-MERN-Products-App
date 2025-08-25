@@ -26,7 +26,7 @@ export default function NavBar() {
 					sm: "row",
 				}}>
 				<Text
-					bgGradient="linear(to-l, #7928CA, #FF0080)"
+					bgGradient="linear(to-r, #09c7edff, #046bd9ff)"
 					bgClip="text"
 					fontSize={{ base: "22", sm: "28" }}
 					fontWeight="bold"

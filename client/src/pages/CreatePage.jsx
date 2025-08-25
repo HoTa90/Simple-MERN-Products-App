@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useProducts } from "../hooks/products.js";
+import { useNavigate } from "react-router";
 
 export default function CreatePage() {
 	const [newProduct, setNewProduct] = useState({
@@ -17,6 +18,8 @@ export default function CreatePage() {
 		price: "",
 		image: "",
 	});
+
+	const navigate = useNavigate()
 
 	const { createProduct } = useProducts();
 	const toast = useToast();
@@ -48,6 +51,7 @@ export default function CreatePage() {
 		}
 
 		setNewProduct({ name: "", price: "", image: "" });
+		navigate('/');
 	};
 
 	return (
